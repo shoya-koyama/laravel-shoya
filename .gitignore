@@ -1,0 +1,31 @@
+# 環境設定ファイル
+.env
+
+# ログファイル
+logs/
+*.log
+
+# データベースファイル
+data/db/
+
+# Docker ビルド生成物
+**/node_modules/
+**/dist/
+**/build/
+**/target/
+
+# Docker ボリューム
+volumes/
+
+# TLS/SSL 証明書
+**/*.pem
+**/*.key
+**/*.crt
+
+# その他の一時ファイルやエディターの設定ファイル
+*.swp
+*.swo
+*.tmp
+.idea/
+.vscode/
+.DS_Store

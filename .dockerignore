@@ -1,0 +1,34 @@
+# Git ディレクトリとファイル
+.git
+.gitignore
+
+# 環境設定ファイル
+.env
+.env.*
+
+# ログファイル
+logs/
+*.log
+
+# Docker コンポーズファイル
+docker-compose.yml
+docker-compose.*.yml
+
+# 依存関係ディレクトリ
+**/node_modules/
+**/vendor/
+
+# ビルド生成物
+**/dist/
+**/build/
+**/target/
+
+# 一時ファイル
+*.tmp
+*.swp
+*.swo
+
+# エディターと OS の設定ファイル
+.idea/
+.vscode/
+.DS_Store
