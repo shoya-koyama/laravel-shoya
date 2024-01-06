@@ -13,6 +13,7 @@ logs/
 # Docker コンポーズファイル
 docker-compose.yml
 docker-compose.*.yml
+compose.yml
 
 # 依存関係ディレクトリ
 **/node_modules/
