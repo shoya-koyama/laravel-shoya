@@ -21,4 +21,13 @@ class TextController extends Controller
 
         return redirect('/text');
     }
+
+    public function destroy($id)
+    {
+        $text = Text::findOrFail($id);
+        $text->delete();
+        
+        return redirect('/text');
+    }
+
 }
