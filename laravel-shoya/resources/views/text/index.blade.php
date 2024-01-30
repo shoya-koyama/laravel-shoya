@@ -38,5 +38,6 @@
             </li>
         @endforeach
     </ul>
+    <a href="/text/pdf" class="btn btn-primary">Download PDF</a>
 </body>
 </html>

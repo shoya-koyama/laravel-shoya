@@ -13,3 +13,5 @@ Route::post('/text', [TextController::class, 'store']);
 
 Route::delete('/text/{id}', [TextController::class, 'destroy']);
 
+Route::get('/text/pdf', [TextController::class, 'exportPdf']);
+

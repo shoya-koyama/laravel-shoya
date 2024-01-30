@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Text; // モデルを使用
+use PDF; // ライブラリをインポート
 
 class TextController extends Controller
 {
@@ -29,5 +30,12 @@ class TextController extends Controller
         
         return redirect('/text');
     }
+
+    public function exportPdf()
+{
+    $texts = Text::all();
+    $pdf = PDF::loadView('text.pdf', compact('texts'));
+    return $pdf->download('texts.pdf');
+}
 
 }
