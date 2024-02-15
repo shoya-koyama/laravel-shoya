@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('memos', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('texts', function (Blueprint $table) {
+            $table->string('file_path')->nullable();
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('memos');
+        Schema::table('texts', function (Blueprint $table) {
+            $table->dropColumn('file_path'); 
+        });
     }
 };
