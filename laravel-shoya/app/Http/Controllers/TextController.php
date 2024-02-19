@@ -17,29 +17,36 @@ class TextController extends Controller
     
     public function store(Request $request)
     {
-        if ($request->hasFile('file')) {
-            if ($request->file('file')->isValid()) {
-                $file = $request->file('file');
-                $filename = time() . '_' . $file->getClientOriginalName();
-                // `Storage::putFileAs` を使用してみる
-                $path = Storage::putFileAs('public/files', $file, $filename);
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            $file = $request->file('file');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            // ファイルを保存し、ストレージ内の相対パスを取得
+            $path = Storage::putFileAs('public/files', $file, $filename);
+            
+            $text = new Text();
+            $text->content = $request->input('content');
+            // データベースにはストレージ内の相対パスを保存
+            $text->file_path = $path; // 例: 'public/files/filename.jpg'
+            $text->save();
     
-                // ファイルパスを保存する際のパスを修正
-                $text = new Text();
-                $text->content = $request->input('content');
-                // `asset` ヘルパーを使用せず、直接パスを保存
-                $text->file_path = $path; // `asset` ヘルパーは表示時に使用
-                $text->save();
-    
-                return redirect('/text');
-            }
+            return redirect('/text')->with('success', 'ファイルが正常にアップロードされました。');
         }
     
         return back()->withErrors(['file' => 'ファイルがアップロードされていないか、不正です。']);
     }
 
 
-
+    public function postRandomText(Request $request)
+    {
+        $randomWords = ['エモい', '了解', 'ASMRやん', '何してる？', '好きや', 'まてと！', '🐈', '☻', 'どういう計算方法でそうなんねん！', 'もうね・・・もうたまらんねん！'];
+        $randomWord = $randomWords[array_rand($randomWords)];
+    
+        $text = new Text();
+        $text->content = $randomWord;
+        $text->save();
+    
+        return back()->with('success', 'Random word posted successfully!');
+    }
 
     public function destroy($id)
     {

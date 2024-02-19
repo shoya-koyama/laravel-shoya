@@ -15,5 +15,7 @@ Route::delete('/text/{id}', [TextController::class, 'destroy']);
 
 Route::get('/text/pdf', [TextController::class, 'exportPdf']);
 
+Route::post('/post-random-text', [TextController::class, 'postRandomText'])->name('post.random.text');
+
 
 

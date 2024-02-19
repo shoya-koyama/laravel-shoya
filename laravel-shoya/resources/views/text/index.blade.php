@@ -33,34 +33,47 @@
         <button type="submit">Submit</button>
     </form>
 
+    <!-- ランダムな言葉を投稿するためのボタンを追加 -->
+    <form method="POST" action="/post-random-text">
+        @csrf
+        <button type="submit">Post Random Word</button>
+    </form>
+
     <h2>Saved Texts</h2>
     <ul>
-        @foreach ($texts as $text)
-        <li class="text-item">
-            <div class="text-content">{{ $text->content }}</div>
-            @if (!empty($text->file_path))
+    @foreach ($texts as $text)
+    <li class="text-item">
+        <div class="text-content">{{ $text->content }}</div>
+        @if (!empty($text->file_path))
             <!-- ファイルが画像の場合は表示、それ以外はダウンロードリンク -->
-            @if (in_array(pathinfo($text->file_path, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']))
+            @php
+                $fileExtension = strtolower(pathinfo($text->file_path, PATHINFO_EXTENSION));
+            @endphp
+            @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
                 <div>
-                    <img src="{{ asset($text->file_path) }}" alt="uploaded image" style="max-width: 100px; max-height: 100px;">
+                    <!-- Storage::url を使用してファイルへのURLを生成 -->
+                    <img src="{{ Storage::url($text->file_path) }}" alt="uploaded image" style="max-width: 100px; max-height: 100px;">
                 </div>
             @else
                 <div>
-                    <a href="{{ asset($text->file_path) }}" target="_blank">Download File</a>
+                    <!-- Storage::url を使用してファイルへのURLを生成 -->
+                    <a href="{{ Storage::url($text->file_path) }}" target="_blank">Download File</a>
                 </div>
             @endif
-            @endif
+        @endif
                 
-            <form class="delete-form" method="POST" action="/text/{{ $text->id }}">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Delete</button>
-            </form>
-        </li>
-        @endforeach
+        <!-- 各テキスト項目に対する削除フォーム -->
+        <form class="delete-form" method="POST" action="/text/{{ $text->id }}">
+            @csrf
+            @method('DELETE')
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+    @endforeach
+</ul>
 
-    </ul>
 
     <a href="/text/pdf" class="btn btn-primary">Download PDF</a>
 </body>
+
 </html>
